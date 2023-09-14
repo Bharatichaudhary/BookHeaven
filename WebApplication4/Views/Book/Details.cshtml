@@ -1,0 +1,145 @@
+﻿@model BookModel;
+@using Microsoft.AspNetCore.Http
+@{
+   
+    string email = Context.Session.GetString("Email");
+
+    
+}
+@{
+    ViewData["Title"] = "Add new Book";
+}
+<div class="row text">
+    <!--
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Details For @Model.Name</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                    <div class="form-group1">
+                        <img class="border-info rounded-circle" style="margin:auto" id="ImagePreview"/>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="Photos" class="control-label"></label>
+                        <input asp-for="Photos" class="form-control" readonly/>
+                        <span asp-validation-for="Photos" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control"readonly/>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="Summary" class="control-label"></label>
+                        <input asp-for="Summary" class="form-control" readonly/>
+                        <span asp-validation-for="Summary" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="Publication" class="control-label"></label>
+                        <input asp-for="Publication" class="form-control" readonly/>
+                        <span asp-validation-for="Publication" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="Genre" class="control-label"></label>
+                        <input asp-for="Genre" class="form-control" readonly/>
+
+                        <span asp-validation-for="Genre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="PreferredAge" class="control-label"></label>
+                        <input asp-for="PreferredAge" class="form-control" readonly/>
+                        <span asp-validation-for="PreferredAge" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" readonly/>
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                    @if (email == "admin123@gmail.com")
+                    {
+                        <a class="btn btn-outline-success" style="float:right;" asp-action="Edit" asp-route-id="@Model.BookId">Edit</a>
+                    }
+                    <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+                    </div>
+                   
+            </div>
+
+        </div>
+    </div>-->
+    <div class=" border-primary mb-3 ">
+    
+                
+                    <div class="col-md-10" style="margin:auto;">
+                        <div class="card-header text-black">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @Model.Name
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex" style="margin:auto">
+                    <div class="col-md-3 p-1">
+                        <img src="@Model.Photos" style="width:50%; float:right" alt="@Model.Name">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text" >
+                                    @Model.Summary
+                                                       
+                                </p>
+                            <p class="card-text"><b>Genre: </b>@Model.Genre</p>
+                            <p class="card-text"><b>Publication: </b>@Model.Publication</p>
+                            <p class="card-text"><b>Preferred Age: </b>@Model.PreferredAge.ToString()</p>
+                        </div>
+                           <div class="card-footer">
+                            <p class="card-text" style="width:fit-content;">
+                               
+                                <a class="btn btn-success text-white"  asp-action="AddToCart" asp-route-id="@Model.BookId">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart (Rs.@Model.Price.ToString())
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <!--<div class="col-md-12">
+                        <div class="card-footer">
+                            <p class="card-text">
+                               
+                                <a class="btn btn-success text-white"  asp-action="AddToCart" asp-route-id="@Model.BookId">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart (Rs.@Model.Price.ToString())
+                                </a>
+                            </p>
+                        </div>
+                    </div>-->
+                </div>
+        </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function(){
+            var output=document.getElementById('ImagePreview');
+            output.src=$("#Photos").val();
+        })
+         function toggleContent(itemId) {
+            var readMore = document.getElementById("ReadMore_" + itemId);
+            var readLess = document.getElementById("ReadLess_" + itemId);
+            var showButton = document.getElementById("Show_" + itemId);
+
+            if (readMore.style.display === "none") {
+                readMore.style.display = "inline";
+                readLess.style.display = "none";
+                showButton.textContent = "...show more";
+            } else {
+                readMore.style.display = "none";
+                readLess.style.display = "inline";
+                showButton.textContent = "...show less";
+            }
+        }
+    </script>
+}

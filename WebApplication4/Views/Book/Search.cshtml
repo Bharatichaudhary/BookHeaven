@@ -1,0 +1,48 @@
+﻿@model IEnumerable<BookModel>
+
+@{
+    ViewData["Title"] = "List of Book";
+}
+
+<div class="row mainPage">
+
+    @foreach (var item in Model)
+    {
+          <div class="col-md-2" >
+              <div  id="image_@item.BookId" style="padding:0 0.5rem;height:15rem;">
+                        <img src="@item.Photos"style="width:100%;height:100%;"   alt="@item.Name"/>
+                        <p class="Add_@item.BookId"style="width:100%;display:none; margin-top:2rem;" >
+                         <a style="background-color:aquamarine;color:black;padding:0.8rem 0.2rem;" asp-action="AddToCart" asp-route-id="@item.BookId">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart (Rs.@item.Price.ToString())
+                                </a>
+                                </p>
+                        </div>
+
+                        <p class="BookName">
+                            <a asp-action="Details" asp-route-id="@item.BookId" style="color:black;font-weight:600;margin:0.4rem;">
+                            @item.Name:@item.Genre
+                            </a>
+                        </p>
+                  
+          </div>
+    
+    }
+</div>
+
+@section Scripts {
+    @foreach (var item in Model)
+{
+    <script>
+        $("#image_@item.BookId").on("mouseenter", function() {
+            $(".Add_@item.BookId").css("display", "block");
+            $(".Add_@item.BookId").css("margin-top", "-2rem");
+
+        });
+
+        $("#image_@item.BookId").on("mouseleave", function() {
+            $(".Add_@item.BookId").css("display", "none");
+        });
+    </script>
+}
+
+}

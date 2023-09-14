@@ -1,0 +1,97 @@
+﻿@model List<BookModel>
+@{
+    ViewData["Title"] = "List of Book";
+        string email = Context.Session.GetString("Email");
+
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        @if (Model.Count == 0)
+{
+    <div style="align-content:center;text-align:center;">
+    <p style="text-align:center; font-size:32px;font-weight:700;margin-top:1rem;">The cart is empty.</p>
+    </div>
+}
+else
+{
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Photos</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Count</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            <img  src="@item.Photos" alt="@item.Name" style="max-width:150px;" />
+                        </td>
+                        <td class="align-middle">
+                            <a asp-action="Details" asp-route-id="@item.BookId" style="color:black;">
+                            @Html.DisplayFor(modelItem => item.Name)
+                            </a>
+                        </td>
+                        <td class="align-middle">
+                           Rs. @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td class="align-middle">
+                                <input asp-for="Count"value="1" type="number" style="width: 5rem;" onchange="calculateTotal(this)" data-id="@item.BookId" data-price="@item.Price" />
+                        </td>
+                       <td class="align-middle" id="total-@item.BookId">
+                              Rs. @item.Price
+                        </td>
+                        <td class="align-middle">
+                            @if(email!=null){
+                            <a class="btn btn-outline-info text-black"  asp-action="RemoveFromCart" onclick="alert('Purchased Successful');" asp-route-id="@item.BookId"><i class="bi bi-cart-check"></i>Buy Now</a>
+                            }
+                            else{
+                             <a class="btn btn-outline-info text-black"   onclick="alert('Please login to continue');" asp-route-id="@item.BookId"><i class="bi bi-cart-check"></i>Buy Now</a>
+                            }
+                            <a class="btn btn-danger"  asp-action="RemoveFromCart" asp-route-id="@item.BookId" ><i class="bi bi-cart-dash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        }
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    <script>
+        
+        $("#Count").on("change",function(){
+            var output=document.getElementById('Total');
+
+            output=$(this).val();
+        })
+        function Successful(){
+            alert("Purchased Successful")
+        }
+        function showFullContent(itemId) {
+            var readMore = document.getElementById("ReadMore_" + itemId);
+            var readLess = document.getElementById("ReadLess_" + itemId);
+
+            readMore.style.display = "none";
+            readLess.style.display = "inline";
+        }
+        function calculateTotal(input) {
+             var count = parseInt(input.value);
+            var price = parseInt(input.getAttribute("data-price"));
+            var totalElement = document.getElementById("total-" + input.getAttribute("data-id"));
+            var total = count * price;
+            totalElement.innerText = "Rs. "+ total.toFixed(2); // Format the total value as desired
+    }
+    </script>
+}

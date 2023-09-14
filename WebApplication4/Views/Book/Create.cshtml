@@ -1,0 +1,86 @@
+﻿@model BookModel;
+@{
+    ViewData["Title"] = "Add new Book";
+}
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Add a new Book</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                    <div class="form-group1">
+                        <img class="border-info " style="margin:auto" id="ImagePreview"/>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="Photos" class="control-label"></label>
+                        <input asp-for="Photos" class="form-control"/>
+                        <span asp-validation-for="Photos" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control"/>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="Summary" class="control-label"></label>
+                        <input asp-for="Summary" class="form-control"/>
+                        <span asp-validation-for="Summary" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="Publication" class="control-label"></label>
+                        <input asp-for="Publication" class="form-control"/>
+                        <span asp-validation-for="Publication" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="Genre" class="control-label"></label>
+                         <select id="Genre" name="Genre" class="border-0 p-1 " style="background-color:rgba(255,255,255,0.5);border-radius:0.5rem;">
+        <option value="Fantasy">Fantasy</option>
+        <option value="Non_Fiction">Non-Fiction</option>
+        <option value="Children">Children</option>
+        <option value="Poetry">Poetry</option>
+        <option value="Drama">Drama</option>
+        <option value="Horror">Horror</option>
+        <option value="Comic">Comic</option>
+        <option value="Essay">Essay</option>
+
+    </select>
+
+                        <span asp-validation-for="Genre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="PreferredAge" class="control-label"></label>
+                        <input asp-for="PreferredAge" class="form-control"/>
+                        <span asp-validation-for="PreferredAge" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control"/>
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group1">
+                        <input type="submit" value="Create" onclick="alert('Book Added')" class="btn btn-outline-success" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+                    </div>
+                    </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function(){
+            var output=document.getElementById('ImagePreview');
+            output.src=$("#Photos").val();
+        })
+        $("#Photos").on("change",function(){
+            var output=document.getElementById('ImagePreview');
+            output.src=$(this).val();
+        })
+    </script>
+}
